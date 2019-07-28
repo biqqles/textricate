@@ -13,6 +13,7 @@ see README.md. Requires ftfy.
 from collections import OrderedDict, defaultdict
 import sqlite3
 import time
+import xml.sax.saxutils as saxutils
 
 from ftfy import fix_encoding
 
@@ -32,10 +33,10 @@ messages = defaultdict(list)  # messages, grouped by time
 # convert from Textra's schema to SMS Backup and Restore's
 for m in db_messages:
     if m['text']:  # filter empty messages
-        text = fix_encoding(m['text']).replace('"', '&quot;')  # repair encoding and prepare for XML conversion
+        text = saxutils.escape(fix_encoding(m['text']), {'"': '&quot;'})  # repair encoding and prepare for XML conversion
         message = OrderedDict([
             ('protocol', 0),
-            ('address', m['lookup_key'].replace('^', '')),
+            ('address', saxutils.escape(m['lookup_key'].replace('^', ''), {'"': '&quot;'})),
             ('date', m['ts']),
             ('type', m['direction'] + 1),  # Textra uses 0 for received and 1 for sent; SMS B&R uses 1 and 2
             ('subject', 'null'),

@@ -1,9 +1,6 @@
 """
 Copyright © 2018 biqqles.
 
-This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
-distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 This script exports Textra's messaging database to an XML file understood by SMS Backup and Restore. Copy Textra's
 messaging database at `/data/data/com.textra/databases/messaging.db` to the same directory as this script and run. 
 Copy the resulting textricate.xml back onto the device and restore with SMS Backup and Restore. For more details
